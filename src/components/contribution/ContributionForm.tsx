@@ -49,7 +49,7 @@ const ContributionForm: React.FC<{ onAdd: (contrib: Contribution) => void }> = (
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 bg-white rounded shadow-md">
+    <form className="p-4 bg-white rounded shadow-md">
       <h3 className="text-xl font-bold mb-4">Submit Contribution</h3>
       {error && <p className="text-red-500 mb-2">{error}</p>}
       <div className="mb-4">
@@ -82,7 +82,7 @@ const ContributionForm: React.FC<{ onAdd: (contrib: Contribution) => void }> = (
           className="border p-2 rounded w-full"
         />
       </div>
-      <button type="submit" className="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded">
+      <button onClick={handleSubmit} type="submit" className="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded">
         Submit Contribution
       </button>
     </form>
