@@ -1,10 +1,21 @@
-import React from 'react';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./components/auth/Login";
+import PasswordRecovery from "./components/auth/PasswordRecovery";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
+// import ToastNotifications from "./components/notifications/ToastNotifications";
 import "./index.css";
 
 const App: React.FC = () => {
   return (
-    <h1 className='text-2xl text-blue-500'>Pension Management App</h1>
-  )
-}
+    <Router>
+      {/* <ToastNotifications /> */}
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/password-recovery" element={<PasswordRecovery />} />
+      </Routes>
+    </Router>
+  );
+};
 
-export default App
+export default App;
