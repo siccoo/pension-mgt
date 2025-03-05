@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 interface Notification {
   id: number;
@@ -22,6 +23,12 @@ const NotificationCenter: React.FC = () => {
 
   return (
     <div className="p-4 bg-white rounded shadow-md">
+      <Link
+        to="/"
+        className="flex items-center text-blue-500 hover:underline mb-4"
+      >
+        <span className="mr-2">&#8592;</span> Back to Home
+      </Link>
       <h3 className="text-xl font-bold mb-4">Notifications</h3>
       <ul>
         {notifications.map((notif) => (

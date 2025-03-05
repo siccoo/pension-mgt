@@ -1,28 +1,41 @@
+
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../features/session/sessionSlice';
-import RoleBasedElement from '../common/RoleBasedElement';
+// import RoleBasedElement from '../RoleBasedElement';
+import Avatar from "../../assets/avatar.png";
 
 const MemberDashboard: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   
   const member = {
-    profilePic: 'https://via.placeholder.com/150',
+    profilePic: Avatar,
     name: 'John Doe',
     email: 'john@example.com',
     phone: '123-456-7890',
+    nextOfKin: {
+      name: "Jane Doe",
+      relationship: "Spouse",
+      phone: "987-654-3210",
+    },
+    employer: {
+      name: "ACME Corp",
+      address: "123 Main St, City, Country",
+      contact: "555-555-5555",
+    },
     contributions: [
-      { month: 'Sep', amount: 205 },
-      { month: 'Oct', amount: 190 },
-      { month: 'Nov', amount: 210 },
-      { month: 'Dec', amount: 180 },
-      { month: 'Jan', amount: 200 },
+      { month: 'Sep', amount: 205, date: "2025-09-15" },
+      { month: 'Oct', amount: 190, date: "2025-10-15" },
+      { month: 'Nov', amount: 210, date: "2025-11-15" },
+      { month: 'Dec', amount: 180, date: "2025-12-15" },
+      { month: 'Jan', amount: 200, date: "2026-01-15" },
     ],
   };
 
+  // For contribution chart filtering (if needed)
   const [searchTerm, setSearchTerm] = useState('');
   const filteredContributions = member.contributions.filter((c) =>
     c.month.toLowerCase().includes(searchTerm.toLowerCase())
@@ -66,13 +79,32 @@ const MemberDashboard: React.FC = () => {
             <h2 className="text-xl font-bold">{member.name}</h2>
             <p>{member.email}</p>
             <p>{member.phone}</p>
-            <RoleBasedElement allowedRoles={['member']}>
-              <button className="mt-2 bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded">
-                Edit Profile
-              </button>
-            </RoleBasedElement>
+          </div>
+          <div className="mt-4 border-t pt-4">
+            <h3 className="font-bold text-lg">Next of Kin</h3>
+            <p><strong>Name:</strong> {member.nextOfKin.name}</p>
+            <p><strong>Relationship:</strong> {member.nextOfKin.relationship}</p>
+            <p><strong>Phone:</strong> {member.nextOfKin.phone}</p>
+          </div>
+          <div className="mt-4 border-t pt-4">
+            <h3 className="font-bold text-lg">Employer Information</h3>
+            <p><strong>Name:</strong> {member.employer.name}</p>
+            <p><strong>Address:</strong> {member.employer.address}</p>
+            <p><strong>Contact:</strong> {member.employer.contact}</p>
+          </div>
+          <div className="mt-4 border-t pt-4">
+            <h3 className="font-bold text-lg">Recent Contributions</h3>
+            <ul>
+              {member.contributions.map((c, index) => (
+                <li key={index} className="text-sm">
+                  {c.date} - ${c.amount}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
+
+        {/* Right Column - Contribution Visualization */}
         <div className="bg-white p-4 rounded shadow-md w-full md:w-2/3">
           <div className="mb-4">
             <h3 className="text-xl font-bold">Contribution Statistics</h3>
