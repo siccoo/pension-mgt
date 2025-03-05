@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../features/session/sessionSlice';
 import RoleBasedElement from '../common/RoleBasedElement';
 
 const MemberDashboard: React.FC = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
   const member = {
     profilePic: 'https://via.placeholder.com/150',
     name: 'John Doe',
@@ -22,8 +28,31 @@ const MemberDashboard: React.FC = () => {
     c.month.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleLogout = () => {
+    dispatch(setUser(null));
+    navigate('/login');
+  };
+
   return (
     <div className="container mx-auto p-4">
+      <nav className="flex justify-end gap-4 mb-6">
+        <Link to="/contributions" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
+          Contributions
+        </Link>
+        <Link to="/statement" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
+          Statement
+        </Link>
+        <Link to="/notifications" className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
+          Notifications
+        </Link>
+        <button
+          onClick={handleLogout}
+          className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
+        >
+          Logout
+        </button>
+      </nav>
+
       <h1 className="text-3xl font-bold mb-4">Member Dashboard</h1>
       <div className="flex flex-col md:flex-row gap-4">
         <div className="bg-white p-4 rounded shadow-md w-full md:w-1/3">

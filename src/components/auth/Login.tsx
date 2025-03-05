@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../features/session/sessionSlice';
 import type { AppDispatch } from '../../store';
+import { mockApi } from '../../api/mockApi';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -24,7 +25,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     if (!validateForm()) return;
     try {
-      const userData = { username, role: username === 'admin' ? 'admin' : 'member' };
+      const userData = await mockApi.login(username, password);
       dispatch(setUser(userData));
       navigate('/');
     } catch (err) {
@@ -57,7 +58,11 @@ const Login: React.FC = () => {
             className="border p-2 rounded w-full"
           />
         </div>
-        <button type="submit" className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded" onClick={handleLogin}>
+        <button
+          type="submit"
+          className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded"
+          onClick={handleLogin}
+        >
           Login
         </button>
         <div className="mt-4 text-center">
