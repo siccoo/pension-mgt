@@ -9,8 +9,9 @@ interface SessionState {
   user: User | null;
 }
 
+const storedUser = localStorage.getItem("user");
 const initialState: SessionState = {
-  user: null,
+  user: storedUser ? JSON.parse(storedUser) : null,
 };
 
 export const sessionSlice = createSlice({
@@ -19,6 +20,11 @@ export const sessionSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<User | null>) => {
       state.user = action.payload;
+      if (action.payload) {
+        localStorage.setItem("user", JSON.stringify(action.payload));
+      } else {
+        localStorage.removeItem("user");
+      }
     },
   },
 });
